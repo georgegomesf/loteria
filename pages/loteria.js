@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         padding: '1.5rem',
-        maxWidth: '80rem',
         width: '100%'
     },
     paper: {
@@ -33,8 +32,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "left",        
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '1.5rem',
-        maxWidth: '80rem',
+        padding: '1.5rem',        
         width: '100%'
     }, 
     backdrop: {
@@ -51,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     },
     card: {
         width: '16rem',
-        margin: '0.5rem',
+        //margin: '0.5rem',
         padding: '1rem',
     },
     subtitulo: {
