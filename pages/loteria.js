@@ -13,15 +13,14 @@ import { db, getDoc, getDocs, doc, collection, updateDoc, setDoc, arrayUnion, ar
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
-        flexDirection: 'column',
-        flexWrap: 'wrap',
+        flexDirection: 'column',        
         backgroundColor: 'rgba(255,255,255,0.1)',
         color: "#ffffff",
-        textAlign: "left",        
+        textAlign: "left",  
         justifyContent: 'center',
-        alignItems: 'center',
-        padding: '1.5rem',        
-        width: '100%'
+        alignItems: 'center',                
+        width: '100%',
+        padding: '1.5rem',
     },
     paper: {
         display: 'flex',
@@ -31,8 +30,7 @@ const useStyles = makeStyles((theme) => ({
         color: "#ffffff",
         textAlign: "left",        
         justifyContent: 'center',
-        alignItems: 'center',
-        padding: '1.5rem',        
+        alignItems: 'center',                
         width: '100%'
     }, 
     backdrop: {
