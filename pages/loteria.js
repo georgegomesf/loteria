@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',                
         width: '100%',
-        padding: '1.5rem',
+        padding: '1rem',
     },
     paper: {
         display: 'flex',
@@ -46,13 +46,19 @@ const useStyles = makeStyles((theme) => ({
         margin: '0.2rem'
     },
     card: {
-        width: '16rem',
+        width: '15rem',
         margin: '0.3rem',
-        padding: '1rem',
+        padding: '1rem 0.5rem',
+    },
+    titulo: {
+        fontSize: '1.2rem',
+        margin: '0.3rem 0 0.5rem 0.3rem',
+        padding: 0,
+        fontWeight: 700
     },
     subtitulo: {
         fontSize: '0.8rem',
-        margin: '0.5rem',
+        margin: '0.3rem 0 0.5rem 0.3rem',
         padding: 0
     },
     chip: {
@@ -230,7 +236,7 @@ export default function Admin() {
             </div>
             <Paper className={classes.paper}>
             {Array.from({length: 10}, (x, j) => j).map((p,indexp) => <Card className={classes.card} key={indexp}>
-                <Typography variant='h6'>{p+1}º Premio</Typography>
+                <div className={classes.titulo}>{p+1}º Premio</div>
                 <CardContent className={classes.cardContent}>
                 {jogos.length>0 && jogos.filter(f=>f.premio==p+1).map(i => 
                 i.grupos.sort(ordenar).map((h,index)=>

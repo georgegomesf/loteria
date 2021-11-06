@@ -68,7 +68,7 @@ export default function Header(props) {
 
         const windowsScrollTop = window.pageYOffset;
 
-        if (windowsScrollTop > 100) {
+        if (windowsScrollTop > 60) {
             setCor(changeColorOnScroll.color);            
         } else {
             setCor(corInicial);
