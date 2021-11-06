@@ -71,7 +71,8 @@ export default function Admin() {
 
     const classes = useStyles();
     const router = useRouter();
-    const { user, loading } = useAuth();
+    const { user } = useAuth();
+    const [loading,setLoading] = useState(false);
     const [access,setAccess] = useState(false);
     const [atualiza,setAtualiza] = useState(false)
     const [atualizacao,setAtualizacao] = useState()
@@ -95,6 +96,8 @@ export default function Admin() {
 
     useEffect(() => {
         const pegaJogos = async () => {
+
+            setLoading(true)
             const coll = collection(db,'calculos');
             const docs = await getDocs(coll).then(r=> { return r } )
             docs && setJogos(docs.docs.map(i=>i.data()))
@@ -102,6 +105,7 @@ export default function Admin() {
             const atualizacao = collection(db,'atualizacao')
             const docAtual = await getDoc(doc(atualizacao,"dados"))
             setAtual(format(parseISO(docAtual.data().datahora),"dd/MM/Y à's' hh:mm'h'"))
+            setLoading(false)
             
         }
         pegaJogos()
@@ -110,6 +114,7 @@ export default function Admin() {
 
     const atualizar = async () => {
 
+        setLoading(true)
         const hoje = new Date()
         const listDate = [];
         const startDate = format(hoje - (40 * 24 * 60 * 60 * 1000),"Y-MM-dd");
@@ -165,6 +170,7 @@ export default function Admin() {
         docsExt.map(j => {
             Array.from({length: 10}, (x, g) => g).map(p=> {
                 const docPremios = j.filter(f=>f.premio==p+1).map(i => {
+                    deleteDoc(doc(collCalculos,(p+1).toString().padStart(2,'0')))
                     return {
                         premio: i.premio,
                         grupo: i.grupo,
@@ -192,6 +198,8 @@ export default function Admin() {
         } else {
             setDoc(doc(atualizacao,"dados"),{ datahora: format(hoje,"yyyy-MM-dd'T'HH:mm:ss.SSSxxx") })
         }
+
+        setLoading(false)
         
     }
 
