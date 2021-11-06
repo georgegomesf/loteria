@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',                
         width: '100%',
         padding: '1rem',
+        maxWidth: '80rem'
     },
     paper: {
         display: 'flex',
@@ -108,13 +109,14 @@ export default function Admin() {
             const docAtual = await getDoc(doc(atualizacao,"dados"))
             setAtual(format(parseISO(docAtual.data().datahora),"dd/MM/Y à's' hh:mm'h'"))
             setLoading(false)
+            console.table(docs.docs.map(i=>i.data()))
             
         }
         pegaJogos()
     }, [,atualiza]) 
  
 
-    const atualizar = async () => {
+    const atualizar = async () => { 
 
         setLoading(true)
         const hoje = new Date()
@@ -205,11 +207,11 @@ export default function Admin() {
         
     }
 
-    const ordenar = ( a, b ) => {
-        if ( a.ultimaExtracao < b.ultimaExtracao ){
+    const ordenar = ( b,a ) => {
+        if ( a.dias < b.dias ){
           return -1;
         }
-        if ( a.ultimaExtracao > b.ultimaExtracao ){
+        if ( a.dias > b.dias ){
           return 1;
         }
         return 0;
