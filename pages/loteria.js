@@ -297,7 +297,7 @@ export default function Admin() {
                         className={classes.select}
                         defaultValue={atual ? atual.toString().substring(6,8) + '/' + atual.toString().substring(4,6) + '/' + atual.toString().substring(0,4) + ' ' + atual.toString().substring(8,10) + ':' + atual.toString().substring(10,12) : format(parseISO(ultimas[0].data+' '+ultimas[0].hora),"dd/MM/Y '-' HH:mm'h")}
                         >
-                        {ultimas.map(i=> <MenuItem value={i.id}>{format(parseISO(i.data+' '+i.hora),"dd/MM/Y ' - ' HH:mm'h")}</MenuItem>)}
+                        {ultimas.map((i,index)=> <MenuItem key={index} value={i.id}>{format(parseISO(i.data+' '+i.hora),"dd/MM/Y ' - ' HH:mm'h")}</MenuItem>)}
                     </Select>
                 </FormControl>
                 </div>
