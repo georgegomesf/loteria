@@ -113,9 +113,9 @@ export default function Admin() {
     const [access,setAccess] = useState(false);
     const [atualiza,setAtualiza] = useState(false)
     const [atual,setAtual] = useState()
-    const [jogos,setJogos] = useState({})
-    const [extracao,setExtracao] = useState();
+    const [jogos,setJogos] = useState({})    
     const [ultimas,setUltimas] = useState();
+    const [recentes,setRecentes] = useState();
 
     useEffect(() => {
         const loginCheck = () => {
@@ -146,10 +146,10 @@ export default function Admin() {
 
             const collUltima = collection(db,'extracoes')
             const docUltima = await getDocs(query(collUltima,orderBy("id","desc"),limit(21)))
-            setUltimas(docUltima.docs.map(i=>i.data()))            
-            
+            setUltimas(docUltima.docs.map(i=>i.data()))
+            setRecentes(docAtual.data().extracao && docUltima.docs.filter(f=>f.data().id>docAtual.data().extracao).map(i=>i.data()))
             setLoading(false)
-             
+
         }        
         pegaJogos()
         
@@ -269,6 +269,8 @@ export default function Admin() {
         return 0;
       }
 
+const sumValues = obj => Object.values(obj).reduce((a, b) => a + b);
+
   return (    
     <div className={styles.container}>
         <Backdrop className={classes.backdrop}
@@ -304,15 +306,21 @@ export default function Admin() {
             </div>            
             <Paper className={classes.paper}>
             {Array.from({length: 10}, (x, j) => j).map((p,indexp) => <Card className={classes.card} key={indexp}>
-                <div className={classes.titulo}>{p+1}º Premio</div>
+                <div className={classes.titulo}>
+                    {p+1}º Premio <small><small>({
+                        jogos.length>0 && jogos.filter(f=>f.premio==p+1).map(i => { return sumValues(i.grupos.map((h,index)=> index<=8 && parseInt(h.extracoes)) ) })
+                    } extrações)</small></small>
+                </div>
                 <CardContent className={classes.cardContent}>
                 {jogos.length>0 && jogos.filter(f=>f.premio==p+1).map(i => 
                 i.grupos.sort(ordenar).map((h,index)=>
                     index<=8 && <div>
                         <Chip className={classes.chip} variant='outlined' label={`${h.grupo}`} />
                         <span className={classes.subtitulo}>{h.extracoes} extrações</span>
-                        <div className={classes.subtitulo}>Última: {
-                            h.ultimaExtracao.toString().substring(6,8) + '/' + h.ultimaExtracao.toString().substring(4,6) + '/' + h.ultimaExtracao.toString().substring(0,4) + ' ' + h.ultimaExtracao.toString().substring(8,10) + ':' + h.ultimaExtracao.toString().substring(10,12)
+                        <div className={classes.subtitulo} style={{color: recentes?.map(f=>f.premios[p]).includes(h.grupo) && '#B00' }}>Última: {
+                            recentes?.map(f=>f.premios[p]).includes(h.grupo) 
+                            ? recentes?.filter(f=>f.premios[p]==h.grupo).map(i=>i.id).toString().substring(6,8) + '/' + recentes?.filter(f=>f.premios[p]==h.grupo).map(i=>i.id).toString().substring(4,6) + '/' + recentes?.filter(f=>f.premios[p]==h.grupo).map(i=>i.id).toString().substring(0,4) + ' ' + recentes?.filter(f=>f.premios[p]==h.grupo).map(i=>i.id).toString().substring(8,10) + ':' + recentes?.filter(f=>f.premios[p]==h.grupo).map(i=>i.id).toString().substring(10,12)
+                            : h.ultimaExtracao.toString().substring(6,8) + '/' + h.ultimaExtracao.toString().substring(4,6) + '/' + h.ultimaExtracao.toString().substring(0,4) + ' ' + h.ultimaExtracao.toString().substring(8,10) + ':' + h.ultimaExtracao.toString().substring(10,12)
                         }</div>
                     </div>
                 ))}
