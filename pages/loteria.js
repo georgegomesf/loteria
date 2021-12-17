@@ -308,13 +308,13 @@ const sumValues = obj => Object.values(obj).reduce((a, b) => a + b);
             {Array.from({length: 10}, (x, j) => j).map((p,indexp) => <Card className={classes.card} key={indexp}>
                 <div className={classes.titulo}>
                     {p+1}º Premio <small><small>({
-                        jogos.length>0 && jogos.filter(f=>f.premio==p+1).map(i => { return sumValues(i.grupos.map((h,index)=> index<=8 && parseInt(h.extracoes)) ) })
+                        jogos.length>0 && jogos.filter(f=>f.premio==p+1).map(i => { return sumValues(i.grupos.map((h,index)=> index<=4 && parseInt(h.extracoes)) ) })
                     } extrações)</small></small>
                 </div>
                 <CardContent className={classes.cardContent}>
                 {jogos.length>0 && jogos.filter(f=>f.premio==p+1).map(i => 
                 i.grupos.sort(ordenar).map((h,index)=>
-                    index<=8 && <div>
+                    index<=4 && <div>
                         <Chip className={classes.chip} variant='outlined' label={`${h.grupo}`} />
                         <span className={classes.subtitulo}>{h.extracoes} extrações</span>
                         <div className={classes.subtitulo} style={{color: recentes?.map(f=>f.premios[p]).includes(h.grupo) && '#B00' }}>Última: {
